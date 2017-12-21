@@ -88,6 +88,7 @@ class Queue:
     head = None
     final = None
     class Node:
+        next = None
         def __init__(self, book):
             self.next = None
             self.book = book
@@ -98,12 +99,11 @@ class Queue:
     def delete(self):
         if self.head == None:
             return False
-        else:
-            node_temporal = self.head
-            self.head = self.head.next
-            node_temporal.next = None
-            if self.head == None:
-                self.final = self.head
+        node_temporal = self.head
+        self.head = self.head.next
+        node_temporal.next = None
+        if self.head == None:
+            self.final = self.head
         return True
 
     def insert(self, book):
@@ -114,3 +114,37 @@ class Queue:
             self.final.next = node
         self.final = node
         return True
+
+class Stack:
+    peek = None
+    size = 0
+    class Node:
+        next = None
+        def __init__(self, book):
+            self.book = book
+
+    def __init__(self, limit):
+        self.limit = limit
+
+    def push(self, book):
+        if self.size == self.limit:
+            print("Stack Overflow")
+            return False
+        node = self.Node(book)
+        node.next = self.peek
+        self.peek = node
+        self.size = self.size + 1
+        return True
+
+    def pop(self):
+        if self.peek == None:
+            print("Stack is empty")
+            return False
+        peek = self.peek
+        self.peek = self.peek.next
+        peek.next = None
+        self.size = self.size - 1
+        return True
+
+    def peek(self):
+        return None if self.peek == None else self.peek.book
