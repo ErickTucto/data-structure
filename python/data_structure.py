@@ -21,12 +21,16 @@ class List:
         if self.head == None:
             self.head = node
         else:
-            last = self.get(self.size)
+            last = self._get(self.size)
             last.next = node
         self.size = self.size + 1
         return True
 
     def get(self, index):
+        node = self._get(index)
+        return None if node == None else node.book
+
+    def _get(self, index):
         node = self.head
         if index < 0 or index > self.size:
             return None
@@ -38,7 +42,7 @@ class List:
             return node
 
     def first(self):
-        return self.head
+        return self.head.book
 
     def last(self):
         return None if self.head == None else self.get(self.size)
@@ -48,7 +52,7 @@ class List:
             self.preppend(book)
         elif 0 < index <= self.size:
             node = self.Node(book)
-            node_temporal = self.get(index - 1)
+            node_temporal = self._get(index - 1)
             node.next = node_temporal.next
             node_temporal.next = node
             self.size = self.size + 1
@@ -72,10 +76,41 @@ class List:
         if index == 0:
             return self.firstDelete()
         elif 0 < index <= self.size:
-            node_after = self.get(index - 1)
-            node_temporal = self.get(index)
+            node_after = self._get(index - 1)
+            node_temporal = self._get(index)
             node_after.next = node_temporal.next
             node_temporal.next = None
             self.size = self.size - 1
             return True
         return False
+
+class Queue:
+    head = None
+    final = None
+    class Node:
+        def __init__(self, book):
+            self.next = None
+            self.book = book
+
+    def consult(self):
+        return None if self.head == None else self.head.book
+
+    def delete(self):
+        if self.head == None:
+            return False
+        else:
+            node_temporal = self.head
+            self.head = self.head.next
+            node_temporal.next = None
+            if self.head == None:
+                self.final = self.head
+        return True
+
+    def insert(self, book):
+        node = self.Node(book)
+        if head == None:
+            self.head = node
+        else:
+            self.final.next = node
+        self.final = node
+        return True
