@@ -32,3 +32,18 @@ class BST:
             self.left = BST()
         self.left.insert(user)
         return True
+
+    def get(self, id):
+        if self.root.id == id:
+            return self.root
+        elif self.root.id < id:
+            return self._getRight(id)
+        elif self.root.id > id:
+            return self._getLeft(id)
+        else:
+            return False
+
+    def _getRight(self, id):
+        if self.right == None:
+            return False
+        return self.right.get(id)
